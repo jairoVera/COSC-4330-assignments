@@ -1,2 +1,2 @@
 # COSC-4330-assignments
-A repo to dump my assignments from my Operating Systems course.
+A repo that contains my assignments from my Spring 2015 operating systems course.
