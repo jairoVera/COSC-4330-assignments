@@ -1,6 +1,5 @@
 /**
 * Name:   	Jairo Vera
-* PS ID:  	1170501
 * Course: 	COSC 4330
 * Semester: Spring 2015
 * Classification: Junior (Undergraduate)
@@ -19,11 +18,11 @@ class Data{
 public:
     Data(string operation, int parameter);
     Data();
-	
+
     string getOperation() const;
     int getParameter() const;
-	
-	friend ostream& operator<< (ostream& out, const Data& data); 
+
+	friend ostream& operator<< (ostream& out, const Data& data);
 
 private:
     string operation;

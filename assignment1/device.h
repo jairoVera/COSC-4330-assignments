@@ -1,6 +1,5 @@
 /**
 * Name:   	Jairo Vera
-* PS ID:  	1170501
 * Course: 	COSC 4330
 * Semester: Spring 2015
 * Classification: Junior (Undergraduate)
@@ -21,18 +20,18 @@ class Device {
 public:
 	Device(string name);
 	Device();
-	
+
 	string getName() const;
 	Flag getFlag() const;
 	int getProcessNumber() const;
 	int getCompletionTime() const;
-	
+
 	void setFlag(Flag flag);
 	void setProcessNumber(int processNumber);
 	void setCompletionTime(int completionTime);
-	
+
 	friend ostream& operator<< (ostream& out, const Device& device);
-	
+
 private:
 	string name;
 	Flag flag;

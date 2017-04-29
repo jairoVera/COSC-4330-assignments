@@ -1,6 +1,5 @@
 /**
 * Name:   	Jairo Vera
-* PS ID:  	1170501
 * Course: 	COSC 4330
 * Semester: Spring 2015
 * Classification: Junior (Undergraduate)
@@ -22,13 +21,13 @@ public:
 	void append(Process process);
 	Process& operator[] (const int index);
 	Process& getProcess(const int processNumber);
-	
+
 	int getID_BeginsAtTime(int currentTime);
 	int getBeginTime_AfterTime(int currentTime);
 	int getSize() const;
-	
+
 	void print(int terminatedID);
-	
+
 private:
 	vector<Process> processTable;
 };

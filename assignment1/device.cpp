@@ -1,6 +1,5 @@
 /**
 * Name:   	Jairo Vera
-* PS ID:  	1170501
 * Course: 	COSC 4330
 * Semester: Spring 2015
 * Classification: Junior (Undergraduate)
@@ -60,10 +59,10 @@ ostream& operator<< (ostream& out, const Device& device){
 		stringFlag = "BUSY";
 	else
 		stringFlag = "FREE";
-	
-	out<<"Name: "<< device.name <<"\tStatus: "<< stringFlag 
-	   <<"\tProcess Number: "<< device.processNumber 
+
+	out<<"Name: "<< device.name <<"\tStatus: "<< stringFlag
+	   <<"\tProcess Number: "<< device.processNumber
 	   <<"\tCompletion Time: " << device.completionTime <<"\n";
-	
+
 	return out;
 }

@@ -1,12 +1,11 @@
 /**
 * Name:   	Jairo Vera
-* PS ID:  	1170501
 * Course: 	COSC 4330
 * Semester: Spring 2015
 * Classification: Junior (Undergraduate)
 *
 * process.cpp
-* CPP file for the Process class. This class is an entry to the 
+* CPP file for the Process class. This class is an entry to the
 * Process Table class.
 */
 #include <cstdlib>
@@ -84,7 +83,7 @@ void Process::setTotalCPUTime(int totalCPUTime) {
 
 ostream& operator<< (ostream& out, const Process& process){
 	std::string stringStatus;
-	if (process.status == NEW) 
+	if (process.status == NEW)
 		stringStatus = "NEW";
 	else if (process.status == READY)
 		stringStatus = "READY";
@@ -94,7 +93,7 @@ ostream& operator<< (ostream& out, const Process& process){
 		stringStatus = "WAITING";
 	else if (process.status == TERMINATED)
 		stringStatus = "TERMINATED";
-	
+
 	out<< process.id <<"\t\t"<< process.startTime <<"\t\t"<< process.cpuTime <<"\t\t"<< stringStatus <<"\n";
 	return out;
 }

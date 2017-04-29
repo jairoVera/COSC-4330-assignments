@@ -1,12 +1,11 @@
 /**
 * Name:   	Jairo Vera
-* PS ID:  	1170501
 * Course: 	COSC 4330
 * Semester: Spring 2015
 * Classification: Junior (Undergraduate)
 *
 * processTable.cpp
-* CPP file for the Process Table class. The class encapsulates & handles 
+* CPP file for the Process Table class. The class encapsulates & handles
 * access to the process table.
 */
 #include <iostream>
@@ -29,12 +28,12 @@ Process& ProcessTable::getProcess(const int processNumber){
 		std::cout<<"Program will terminate . . .\n";
 		exit(EXIT_FAILURE);
 	}
-	
+
 	for (int i = 0; i < getSize(); i++) {
 		if (processTable[i].getID() == processNumber)
 			return processTable[i];
 	}
-	
+
 	// The process search failed
 	std::cout<<"ERROR. ProcessTable could not find Process "<< processNumber <<".\n";
 	std::cout<<"Program will terminate . . .\n";
@@ -72,8 +71,8 @@ int ProcessTable::getSize() const {
 void ProcessTable::print(int terminatedID){
 	std::cout<<"Process ID\tStart Time\tCPU Time\tStatus\n";
 	for (unsigned int i = 0; i < getSize(); i++) {
-		if ( (processTable[i].getStatus() != TERMINATED ) || 
-			 (processTable[i].getID() == terminatedID) ) 
+		if ( (processTable[i].getStatus() != TERMINATED ) ||
+			 (processTable[i].getID() == terminatedID) )
 		{
 			std::cout<< processTable[i];
 		}

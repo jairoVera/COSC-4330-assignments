@@ -1,6 +1,5 @@
 /**
 * Name:   	Jairo Vera
-* PS ID:  	1170501
 * Course: 	COSC 4330
 * Semester: Spring 2015
 * Classification: Junior (Undergraduate)
@@ -21,7 +20,7 @@ public:
 	Data& operator[] (const int index);
 	int getSize() const;
 	friend ostream& operator<< (ostream& out, const DataTable& table);
-	
+
 private:
 	vector<Data> dataTable;
 };

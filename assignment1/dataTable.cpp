@@ -1,12 +1,11 @@
 /**
 * Name:   	Jairo Vera
-* PS ID:  	1170501
 * Course: 	COSC 4330
 * Semester: Spring 2015
 * Classification: Junior (Undergraduate)
 *
 * dataTable.cpp
-* The .cpp file for the DataTable class. The class encapsulates & handles 
+* The .cpp file for the DataTable class. The class encapsulates & handles
 * access to the data table.
 */
 #include <iostream>
