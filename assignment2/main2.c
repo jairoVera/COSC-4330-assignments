@@ -1,5 +1,4 @@
 // Name:  Jairo Vera
-// PS ID: 1170501
 // COSC 4330 Spring 2015 Second Assignment
 // This is the main program you should use to test your semaphore calls
 
@@ -36,11 +35,11 @@ int main() {
          printf("Cannot create semaphore sem1.\n");
          _exit(1);
     }
-	
+
     if ((mutex = sem_create(1)) < 0) {
          _exit(2);
          printf("Cannot create semaphore mutex.\n");
-    } 
+    }
     // basic checks
     sem_P(sem1);
     sem_P(sem1);
@@ -53,7 +52,7 @@ int main() {
     if (sem_P(10) >= 0) {
         printf("Server accepted a call to a non-existent semaphore!\n");
     }
-    
+
     if ((pid = fork()) == 0) {
         // child process
         printf("Child process requests the mutex.\n");
@@ -88,12 +87,12 @@ int main() {
 
 int sem_create(int initial_value) {
 	printf("Asking server to create sempahore with initial value %i\n", initial_value);
-	
+
 	int buffer[3];
 	buffer[0] = htonl(0);					// op_code = 0
 	buffer[1] = htonl(-1);					// sem_id  = -1
 	buffer[2] = htonl(initial_value);		// value   = initial_value
-	
+
 	int sem_id = talk_to_server(buffer);
 	if (sem_id >= 0) {
 		printf("Server successfully created a semaphore with id = %i ", sem_id);
@@ -110,7 +109,7 @@ int kill_server() {
 	buffer[0] = htonl(1);		// op_code = 1
 	buffer[1] = htonl(-1);		// sem_id  = -1
 	buffer[2] = htonl(-1);		// value   = -1
-	
+
 	int response = talk_to_server(buffer);
 	puts("Server is dead");
 	return 0;
@@ -118,12 +117,12 @@ int kill_server() {
 
 int sem_P(int sem_id) {
 	printf("Asking server to call sem_P on sempahore with id = %i\n", sem_id);
-	
+
 	int buffer[3];
 	buffer[0] = htonl(2);		// op_code = 2
 	buffer[1] = htonl(sem_id);	// sem_id  = sem_id
 	buffer[2] = htonl(-1);		// value   = -1
-	
+
 	int response = talk_to_server(buffer);
 	if (response == 0)
 		printf("Semaphore with id = %i was decremented\n\n", sem_id);
@@ -140,7 +139,7 @@ int sem_V(int sem_id) {
 	buffer[0] = htonl(3);		// op_code = 3
 	buffer[1] = htonl(sem_id);	// sem_id  = sem_id
 	buffer[2] = htonl(-1);		// value   = -1
-	
+
 	int response = talk_to_server(buffer);
 	if (response == 0)
 		printf("Semaphore with id = %i was incremented.\n\n", sem_id);
@@ -156,7 +155,7 @@ int sem_destroy(int sem_id) {
 	buffer[0] = htonl(4);		// op_code = 4
 	buffer[1] = htonl(sem_id);	// sem_id  = sem_id
 	buffer[2] = htonl(-1);		// value   = -1
-	
+
 	int response = talk_to_server(buffer);
 	if (response == 0)
 		printf("Semaphore with id = %i was destroyed.\n\n", sem_id);
@@ -167,12 +166,12 @@ int talk_to_server(int buffer[]){
 	int socket = send_buffer(buffer);
 	if (socket == -1)
 		return -1;
-	
+
 	puts("Waiting for server reply . . .");
 	int reply = get_reply(socket);
 	if (reply == -1)
 		return -1;
-	
+
 	close(socket);
 	return reply;
 }
@@ -200,10 +199,10 @@ int create_client_socket(){
 	struct sockaddr_in server;
 	struct hostent *hp;
 	char   myname[MAXHOSTNAME+1];
-	
+
 	// Clear our address
 	memset(&server, 0, sizeof(struct sockaddr_in));
-	
+
 	// Get host entity
 	gethostname(myname, MAXHOSTNAME);
 	if ((hp = gethostbyname(myname)) == NULL) {
@@ -212,25 +211,25 @@ int create_client_socket(){
 		puts("Process terminating . . .");
 		_exit(EXIT_FAILURE);
 	}
-	
+
 	// Prepare the sockaddr_in structure
 	server.sin_family = hp->h_addrtype;
 	server.sin_addr.s_addr = INADDR_ANY;
 	server.sin_port = htons(PORT_NUM);
-	
+
 	// Create socket
 	if ((socket_desc = socket(AF_INET , SOCK_STREAM , 0)) == -1){
 		puts("Error. Could not create client socket.");
 		puts("Process terminating . . .");
 		_exit(EXIT_FAILURE);
 	}
-	
+
 	// Connect to server
 	if (connect(socket_desc, (struct sockaddr *)&server, sizeof(server)) < 0) {
 		puts("Could not connect to the server.");
 		puts("Process terminating . . .");
 		_exit(EXIT_FAILURE);
 	}
-	
+
 	return socket_desc;
 }

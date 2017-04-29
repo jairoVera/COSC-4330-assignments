@@ -1,5 +1,4 @@
 // Name:  Jairo Vera
-// PS ID: 1170501
 // COSC 4330 Spring 2015 Second Assignment
 // This is the server program that takes requests from the main2.c client program
 
@@ -48,7 +47,7 @@ int main () {
 	int socket_desc = create_server_socket();
 	int loop 		= true;
 	int new_socket;
-	
+
 	do {
 		puts("Server is live! Waiting for incomming connections");
 		if ((new_socket = accept(socket_desc, NULL, NULL)) < 0) {
@@ -58,20 +57,20 @@ int main () {
 			puts("Server shutting down . . .");
 			exit(EXIT_FAILURE);
 		}
-		
+
 		// Receive Buffer
 		puts("Server accepted an incomming call.");
 		int buffer[3];
 		if (recv(new_socket, buffer, 3*sizeof(int), MSG_WAITALL) < 0){
 			puts("Error. Could not get the client's message.");
 			puts("Server shutting down . . .");
-			exit(EXIT_FAILURE);	
+			exit(EXIT_FAILURE);
 		}
 		int op_code 		= ntohl(buffer[0]);
 		int sem_id  		= ntohl(buffer[1]);
 		int initial_value   = ntohl(buffer[2]);
 		printf("Buffer = {%i, %i, %i}\n", op_code, sem_id, initial_value);
-		
+
 		switch(op_code) {
 			case 0:
 				sem_create(new_socket, initial_value);
@@ -93,9 +92,9 @@ int main () {
 				puts("Error. Server recived unknown op_code.");
 				puts("Server shutting down . . .");
 				exit(EXIT_FAILURE);
-		}		
+		}
 	} while(loop);
-	
+
 	close(socket_desc);
 	close(new_socket);
 	puts("About to kill the server");
@@ -160,7 +159,7 @@ int sem_P(int new_socket, int sem_id) {
 			int sem_val = sem_vector[i].get_sem_val();
 
 			printf("Before sem_P: sem_id = %i AND sem_val = %i\n", sem_id, sem_val);
-			
+
 			if (sem_val > 0) {
 				sem_vector[i].set_sem_val(sem_val - 1);
 				sem_val = sem_vector[i].get_sem_val();
@@ -175,7 +174,7 @@ int sem_P(int new_socket, int sem_id) {
 				break;
 		}
 	}
-	
+
 	if (response == -1)
 		printf("Semaphore with id = %i does not exist. sem_P did nothing.\n\n", sem_id);
 
@@ -220,7 +219,7 @@ int sem_V(int new_socket, int sem_id) {
 				return 1;
 		}
 	}
-	
+
 	if (response == -1)
 		printf("Semaphore with id = %i does not exist. sem_V did nothing.\n\n", sem_id);
 
@@ -246,7 +245,7 @@ int sem_destroy(int new_socket, int sem_id) {
 			break;
 		}
 	}
-	
+
 	if (response == -1)
 		printf("Semaphore with id = %i does not exist. Can't destroy it.\n\n", sem_id);
 
@@ -264,10 +263,10 @@ int create_server_socket(){
 	struct sockaddr_in server;
 	struct hostent *hp;
 	char   myname[MAXHOSTNAME+1];
-	
+
 	// Clear our address
 	memset(&server, 0, sizeof(struct sockaddr_in));
-	
+
 	// Get host entity
 	gethostname(myname, MAXHOSTNAME);
 	if ((hp = gethostbyname(myname)) == NULL) {
@@ -276,19 +275,19 @@ int create_server_socket(){
 		puts("Server shutting down . . .");
 		exit(EXIT_FAILURE);
 	}
-	
+
 	// Prepare the sockaddr_in structure
 	server.sin_family = hp->h_addrtype;
 	server.sin_addr.s_addr = INADDR_ANY;
 	server.sin_port = htons(PORT_NUM);
-	
+
 	// Create socket
 	if ((socket_desc = socket(AF_INET , SOCK_STREAM , 0)) == -1){
 		puts("Error. Could not create server socket.");
 		puts("Server shutting down . . .");
 		exit(EXIT_FAILURE);
 	}
-	
+
 	// Bind socket to port
 	if ((bind(socket_desc,(struct sockaddr *)&server , sizeof(server))) == -1) {
 		puts("Error. Could not bind socket.");
@@ -296,10 +295,10 @@ int create_server_socket(){
 		close(socket_desc);
 		exit(EXIT_FAILURE);
 	}
-	
+
 	// Listen
 	listen(socket_desc, 5);
-	
+
 	return socket_desc;
 }
 
@@ -308,7 +307,7 @@ Semaphore::Semaphore(int sem_id, int sem_val){
 }
 
 int Semaphore::get_sem_val(){
-	return sem_val; 
+	return sem_val;
 }
 
 void Semaphore::set_sem_val(int sem_val){
