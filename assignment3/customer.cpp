@@ -1,5 +1,4 @@
 // Name:  Jairo Vera
-// PS ID: 1170501
 // COSC 4330 Spring 2015 Third Assignment
 // This is the .cpp implementation file for the Customer class
 #include "customer.h"

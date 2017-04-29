@@ -1,5 +1,4 @@
 // Name:  Jairo Vera
-// PS ID: 1170501
 // COSC 4330 Spring 2015 Third Assignment
 // This is the main program that simulates customers in a post office
 
@@ -54,14 +53,14 @@ int main(int argc, char **argv) {
     check_argc(argc);
 	num_clerks = atoi(argv[1]);
 	check_num_clerks(num_clerks);
-	
+
     // Create semaphores & shared memory
     create_semaphores(num_clerks);
     create_shared_mem();
 
     // Get customers
     get_input();
-    
+
     // Nice display
     int test_clerks;
     sem_getvalue(sem_post_office, &test_clerks);
@@ -69,7 +68,7 @@ int main(int argc, char **argv) {
     printf("Dr. Paris's post office is now open!\n");
     printf("He has %i TAs as clerks!\n", test_clerks);
     printf("************************************\n");
-    
+
     // Create children processes
     while (!waiting_queue.empty()) {
         //  Get customer info and pop queue
@@ -85,7 +84,7 @@ int main(int argc, char **argv) {
         if ((pid = fork()) == 0) {
             // Child Process
             cout<< name <<" arrives at the post office.\n";
-            
+
             // Get sem value
             int idle_clerks;
             sem_getvalue(sem_post_office, &idle_clerks);
@@ -103,18 +102,18 @@ int main(int argc, char **argv) {
             sem_wait(sem_post_office);
             cout<< name <<" is getting helped.\n";
             sleep(service_time);
-            
+
             // Customer finishes and leaves
             cout<<"\nIt took " << service_time << " time units to help " << name <<".\n\n";
             cout<< name <<" is leaving the post office.\n";
             sem_post(sem_post_office);
-            
+
             sem_getvalue(sem_post_office, &idle_clerks);
             printf("Number of idle clerks: %i\n", idle_clerks);
             _exit(EXIT_SUCCESS);
         } // End of child
     }
-    
+
     // Wait for the children to be done
     for (int i = 0; i < num_customers; i++)
         wait(0);
@@ -150,7 +149,7 @@ void check_num_clerks(int num_clerks) {
     }
 }
 
-void create_semaphores(int num_clerks) { 
+void create_semaphores(int num_clerks) {
     sem_post_office = sem_open(sem_post_name, O_CREAT, 0600, num_clerks);
     if (sem_post_office == SEM_FAILED) {
         perror("Could not create the post office semaphore: ");
@@ -222,7 +221,7 @@ void destroy_shared_mem() {
 void destroy_semaphores() {
     sem_close(sem_post_office);
     sem_close(sem_mutex);
-    
+
     int post_unlink  = sem_unlink(sem_post_name);
     int mutex_unlink = sem_unlink(sem_mutex_name);
 
